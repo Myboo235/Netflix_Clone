@@ -1,5 +1,9 @@
 import { useCallback, useState } from "react"
+import axios from 'axios'
 import Input from "@component/components/input"
+import { signIn } from 'next-auth/react'
+
+
 
 const Auth = ()=>{
     const [email,setEmail] = useState('');
@@ -12,6 +16,34 @@ const Auth = ()=>{
         setVariant((current)=>current == 'login' ? 'register':'login')
     },[]);
     
+    const register = useCallback(async () => {
+        try{
+            await axios.post('/api/register',{
+              email,
+              name,
+              pass,  
+            })
+
+            console.log(email, name , pass);
+        }catch(error){
+            console.log(error)
+        };
+    },[email,name,pass]);
+
+    const login = useCallback(async () =>{
+        try{
+            await signIn('credentials', {
+                    email,
+                    pass,
+                    redirect: false,
+                    callbackUrl: '/',
+                });
+            console.log(email + pass);
+        }catch(error){
+            console.log(error);
+        };
+    },[email,pass]);
+
     return (
         <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
             <div className="bg-black w-full h-full lg:bg-opacity-50">
@@ -47,8 +79,8 @@ const Auth = ()=>{
                                 value={pass}
                             />     
                         </div> 
-                        <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
-                            {variant=='login'?"Log in":'Sign up'}
+                        <button onClick={variant==='login'?login:register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
+                            {variant=='login'?'Log in':'Sign up'}
                         </button>
                         <p className="text-neutral-500 mt-12">
                             {variant=='login'?'Do not have account . Sign up ':'Already have an account . '}
