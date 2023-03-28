@@ -2,10 +2,23 @@ import NextAuth from "next-auth/next";
 import Credentials from "next-auth/providers/credentials";
 import {compare} from 'bcrypt';
 
+import GithubProvider from "next-auth/providers/github"
+import GoogleProvider from "next-auth/providers/google"
+
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+
 import prismadb from "@component/lib/prismadb";
 
 export default NextAuth({
     providers:[
+        GithubProvider({
+            clientId: process.env.GITHUB_ID || '',
+            clientSecret: process.env.GITHUB_SECRET || '',
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID || '',
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+        }),
         Credentials({
             id:'credentials',
             name:'Credentials',
@@ -14,30 +27,30 @@ export default NextAuth({
                     label: 'Email',
                     type: 'text',
                 },
-               pass:{
+               password:{
                     label:'Password',
                     type : 'password',
                } 
             },
             async authorize(credentials) {
-                if(!credentials?.email && !credentials?.pass){
-                    console.log(credentials?.email + " " + credentials?.pass)
+                if(!credentials?.email && !credentials?.password){
                     throw new Error('Email and password required');
                 }
-                console.log(credentials?.email + " " + credentials?.pass)
 
-
+                
                 const user = await prismadb.user.findUnique({
                     where:{
                         email: credentials.email
                     }
                 });
 
+                console.log(user)
+
                 if(!user || !user.hashedPassword){
                     throw new Error('Email does not exist')
                 }
 
-                const isCorrectPassword = await compare(credentials.pass,user.hashedPassword);
+                const isCorrectPassword = await compare(credentials.password,user.hashedPassword);
 
                 if(!isCorrectPassword){
                     throw new Error('Incorrect password');
@@ -52,6 +65,7 @@ export default NextAuth({
         signIn:'/auth',
     },
     debug: process.env.NODE_ENV == 'development',
+    adapter : PrismaAdapter(prismadb),
     session: {
         strategy:'jwt'
     },

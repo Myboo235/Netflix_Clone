@@ -2,9 +2,7 @@ import bcrypt from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
 import prismadb from '@component/lib/prismadb'
 
-export default async function handle(req:NextApiRequest,res:NextApiResponse) {
-    console.log("Hello")
-
+export default async function handler(req:NextApiRequest,res:NextApiResponse) {
     if(req.method !=='POST'){
         return res.status(405).end();
     }
@@ -12,7 +10,7 @@ export default async function handle(req:NextApiRequest,res:NextApiResponse) {
 
 
     try{
-        const {email, name ,pass} = req.body;
+        const {email, name ,password} = req.body;
         console.log(req.body);
         const existingUser = await prismadb.user.findUnique({
             where:{
@@ -24,7 +22,7 @@ export default async function handle(req:NextApiRequest,res:NextApiResponse) {
             return res.status(422).json({error: 'Email taken'});
         }
 
-        const hashedPassword = await bcrypt.hash(pass, 12);
+        const hashedPassword = await bcrypt.hash(password, 12);
         console.log(email+"  "+name+"  "+hashedPassword)
 
         const user = await prismadb.user.create({
