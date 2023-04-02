@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest , res: NextApiResponse
 
     try {
         const {currentUser} = await serverAuth(req);
-
+        console.log(currentUser);
         return res.status(200).json(currentUser);
     } catch (error) {
         console.log(error);
