@@ -4,8 +4,17 @@ import {BsFillPlayFill} from 'react-icons/bs'
 import {BiChevronDown} from 'react-icons/bi'
 import FavoriteButton from './FavoriteButton';
 import useInfoModal from '@component/hooks/useInfoModal';
+interface MovieInterface {
+  id: string;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  videoUrl: string;
+  duration: string;
+  genre: string;
+}
 interface MovieCardProps{
-    data : Record<string , any>[],
+    data: MovieInterface;
 }
 
 const MovieCard:React.FC<MovieCardProps> = ({data}) =>{
