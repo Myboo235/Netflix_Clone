@@ -1,10 +1,18 @@
 import React from 'react'
+import { useRouter } from 'next/router';
 import {BsFillPlayFill} from 'react-icons/bs'
+import {BiChevronDown} from 'react-icons/bi'
+import FavoriteButton from './FavoriteButton';
+import useInfoModal from '@component/hooks/useInfoModal';
 interface MovieCardProps{
     data : Record<string , any>[],
 }
 
 const MovieCard:React.FC<MovieCardProps> = ({data}) =>{
+    const router = useRouter();
+
+    const {openModal } = useInfoModal();
+
     return (
         <div className='
             group
@@ -26,7 +34,7 @@ const MovieCard:React.FC<MovieCardProps> = ({data}) =>{
                 w-full
                 h-[12vw]
             '    
-            src={data.thumbnailUrl} alt="thumbnail" />
+            src={data?.thumbnailUrl} alt="thumbnail" />
             <div className='
                 opacity-0
                 absolute
@@ -55,7 +63,7 @@ const MovieCard:React.FC<MovieCardProps> = ({data}) =>{
                     w-full
                     h[12vw]
                 '
-                src={data.thumbnailUrl} alt="thumbnail" />
+                src={data?.thumbnailUrl} alt="thumbnail" />
                 <div
                 className='
                     z-10
@@ -85,19 +93,37 @@ const MovieCard:React.FC<MovieCardProps> = ({data}) =>{
                             transition 
                             hover:bg-neutral-300
                             '
-                            onClick={()=>{}}
+                            onClick={()=>{router.push(`/watch/${data?.id}`)}}
                         >
                             <BsFillPlayFill size={30}/>
+                        </div>
+                        <FavoriteButton movieId={data?.id} />
+                        <div 
+                        onClick={()=>{openModal(data?.id)}}
+                        className='
+                            cursor-pointer 
+                            ml-auto 
+                            group/item 
+                            w-6 h-6 
+                            lg:w-10 lg:h-10 
+                            border-white border-2 
+                            rounded-full 
+                            flex 
+                            justify-center
+                            items-center 
+                            transition 
+                            hover:border-neutral-300'>
+                                <BiChevronDown size={30} className='text-white group-hover/item:text-neutral-300 w-4'/>
                         </div>
                     </div>
                     <p className="text-green-400 font-semibold mt-4">
                         New <span className="text-white">2023</span>
                     </p>
                     <div className="flex flex-row mt-4 gap-2 items-center"> 
-                        <p className="text-white text-[10px] lg:text-sm">{data.duration}</p>
+                        <p className="text-white text-[10px] lg:text-sm">{data?.duration}</p>
                     </div>
                     <div className="flex flex-row items-center gap-2 mt-4 text-[8px] text-white lg:text-sm">
-                        <p className="text-white text-[10px] lg:text-sm">{data.genre}</p>
+                        <p className="text-white text-[10px] lg:text-sm">{data?.genre}</p>
                     </div>
                 </div>
             </div>
