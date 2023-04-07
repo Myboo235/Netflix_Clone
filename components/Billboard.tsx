@@ -1,5 +1,5 @@
 import useBillboard from "@component/hooks/useBillboard";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import{AiOutlineInfoCircle} from 'react-icons/ai'
 import PlayButton from "./PlayButton";
 import useInfoModal from "@component/hooks/useInfoModal";
@@ -7,24 +7,34 @@ import useInfoModal from "@component/hooks/useInfoModal";
 const Billboard = () =>{
     const {data } = useBillboard();
     const {openModal} = useInfoModal();
+
+    const modeVideo = "&autoplay=1&mute=1&controls=0&modestbranding=1";
     const handleOpenModal = useCallback(()=>{
         openModal(data?.id);
     },[openModal,data?.id])
     return (
         <div className="relative h-[56.25vw]">
-            <video 
+            <img 
             className="
-              w-full
-              h-[56.25vw]
-              object-cover
-              brightness-[60%]
-            "
-            autoPlay
-            muted
-            loop
-            poster={data?.thumbnailUrl} 
-            src={data?.videoUrl}>
-            </video>
+              absolute 
+              w-full 
+              h-[56.25vw]  
+              object-cover"
+            src={data?.thumbnailUrl}
+            >
+            </img>
+            <iframe 
+                className="
+                w-full
+                h-[56.25vw]
+                object-cover
+                brightness-[60%]
+                pointer-events-none
+                "
+                src={data?.videoUrl + modeVideo}
+            >
+
+            </iframe>
             <div className="absolute top-[30%] md:top-[40%] ml-4 md:ml-16">
                 <p className="
                     text-white 

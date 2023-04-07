@@ -8,7 +8,7 @@ const Watch = () =>{
 
     const {movieId} = router.query;
 
-    
+    const modeVideo = "&autoplay=1&modestbranding=1";
     const {data} = useMovie(movieId as string);
 
     console.log(data);
@@ -37,7 +37,8 @@ const Watch = () =>{
                 {data?.title}
             </p>
       </nav>
-      <video className="h-full w-full" autoPlay controls src={data?.videoUrl}></video>
+      <iframe className='w-full h-full' src={data?.videoUrl + modeVideo}></iframe>
+      {/* <video className="h-full w-full" autoPlay controls src={data?.videoUrl}></video> */}
     </div>
   )
 }

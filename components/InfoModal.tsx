@@ -15,6 +15,7 @@ interface InfoModalProps{
 
 const InfoModal:React.FC<InfoModalProps> = ({visible,onClose}) =>{
     const [isVisible , setIsVisible] = useState<boolean>(!!visible);
+    const modeVideo = "&autoplay=1&mute=1&controls=0&modestbranding=1";
 
     const {movieId} = useInfoModal();
     const {data = {}}= useMovie(movieId);
@@ -67,20 +68,15 @@ const InfoModal:React.FC<InfoModalProps> = ({visible,onClose}) =>{
                     drop-shadow-md
                 `}>
                     <div className='relative h-96'>
-                        <video
+                        <iframe 
                         className='
                             w-full
                             brightness-[60%]
                             object-cover
                             h-full
                         ' 
-                        autoPlay
-                        muted
-                        loop
-                        poster={data?.thumbnailUrl} 
-                        src={data?.videoUrl}>
-
-                        </video>
+                        src={data?.videoUrl + modeVideo}
+                        ></iframe>
                         <div 
                         className="
                             cursor-pointer 
