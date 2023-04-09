@@ -13,7 +13,7 @@ const Billboard = () =>{
         openModal(data?.id);
     },[openModal,data?.id])
     return (
-        <div className="relative h-[56.25vw]">
+        <div className="relative md:h-[56.25vw]">
             <img 
             className="
               absolute 
@@ -35,7 +35,7 @@ const Billboard = () =>{
             >
 
             </iframe>
-            <div className="absolute top-[30%] md:top-[40%] ml-4 md:ml-16">
+            <div className="md:absolute top-[30%] md:top-[40%] ml-4 md:ml-16">
                 <p className="
                     text-white 
                     text-1xl 
@@ -63,7 +63,8 @@ const Billboard = () =>{
                 </p>
                 <div className="flex flex-row items-center mt-3 md:mt-4 gap-3">
                     <PlayButton movieId={data?.id} />
-                    <button className="
+                    <button 
+                    className="
                         bg-white
                         text-white
                         bg-opacity-30
@@ -78,10 +79,13 @@ const Billboard = () =>{
                         font-semibold
                         flex
                         flex-row
+                        items-center
                         hover:bg-opacity-20
                         transition
-                    ">
-                        <AiOutlineInfoCircle onClick={handleOpenModal} size={30} className="w-4 md:w-7 mr-1"/>
+                    "
+                    onClick={handleOpenModal}
+                    >
+                        <AiOutlineInfoCircle size={30} className="w-4 md:w-7 mr-1"/>
                         More Info
                     </button>
                 </div>

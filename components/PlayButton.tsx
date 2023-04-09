@@ -29,7 +29,7 @@ const PlayButton:React.FC<PlayButtonProps> = ({movieId})=>{
             hover:bg-neutral-300
             transition
         ">
-            <BsFillPlayFill size={30} className="mr-1"/>
+            <BsFillPlayFill size={30} className="w-4 md:w-7 mr-1"/>
             Play
         </button>
     )

@@ -29,7 +29,9 @@ const MovieCard:React.FC<MovieCardProps> = ({data}) =>{
             col-span
             relative
             h-[12vw]
-        '>
+        '
+            onClick={()=>{openModal(data?.id)}}
+        >
             <img 
             className='
                 cursor-pointer
