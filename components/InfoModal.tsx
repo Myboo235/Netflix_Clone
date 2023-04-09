@@ -67,7 +67,7 @@ const InfoModal:React.FC<InfoModalProps> = ({visible,onClose}) =>{
                     bg-zinc-900
                     drop-shadow-md
                 `}>
-                    <div className='relative h-96'>
+                    <div className='relative h-40 md:h-96'>
                         <iframe 
                         className='
                             w-full
@@ -96,7 +96,7 @@ const InfoModal:React.FC<InfoModalProps> = ({visible,onClose}) =>{
 
                         </div>
                         <div className="absolute bottom-[10%] left-10">
-                            <p className="text-white text-3xl md:text-4xl h-full lg:text-5xl font-bold mb-8">
+                            <p className="text-white sm:text-3xl md:text-4xl h-full lg:text-5xl font-bold sm:mb-8">
                                 {data?.title}
                             </p>
                             <div className="flex flex-row gap-4 items-center">
